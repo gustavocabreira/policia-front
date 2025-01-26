@@ -1,5 +1,5 @@
 <template>
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 grid-rows-1 gap-4 mt-8">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 grid-rows-1 gap-4">
     <CardComponent>
       <template v-slot:icon><i class="fa-solid fa-link"></i></template>
       <template v-slot:value>35</template>
