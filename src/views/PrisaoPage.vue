@@ -21,65 +21,10 @@
     </div>
   </section>
 
-  <section class="mt-8">
-    <h3 class="text-lg font-bold text-gray-500">CRIMES CONTRA A VIDA</h3>
+  <section class="mt-8" v-for="(category, index) in categories" :key="index">
+    <h3 class="text-lg font-bold text-gray-500">{{ category.label }}</h3>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-2">
-      <CrimeCard v-for="(crime, index) in crimesContraVida" :key="index" :crime="crime">
-      </CrimeCard>
-    </div>
-  </section>
-
-  <section class="mt-8">
-    <h3 class="text-lg font-bold text-gray-500">CRIMES CONTRA DIREITOS FUNDAMENTAIS</h3>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-2">
-      <CrimeCard v-for="(crime, index) in crimesContraDireitosFundamentais" :key="index" :crime="crime">
-        <template v-slot:title>{{ crime.label }}</template>
-      </CrimeCard>
-    </div>
-  </section>
-
-  <section class="mt-8">
-    <h3 class="text-lg font-bold text-gray-500">CRIMES CONTRA A LIBERDADE PESSOAL</h3>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-2">
-      <CrimeCard v-for="(crime, index) in crimesContraLiberdadePessoal" :key="index" :crime="crime">
-        <template v-slot:title>{{ crime.label }}</template>
-      </CrimeCard>
-    </div>
-  </section>
-
-  <section class="mt-8">
-    <h3 class="text-lg font-bold text-gray-500">CRIMES CONTRA A ADMINISTRAÇÃO PÚBLICA</h3>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-2">
-      <CrimeCard v-for="(crime, index) in crimesContraAdministracaoPublica" :key="index" :crime="crime">
-        <template v-slot:title>{{ crime.label }}</template>
-      </CrimeCard>
-    </div>
-  </section>
-
-  <section class="mt-8">
-    <h3 class="text-lg font-bold text-gray-500">CRIMES CONTRA PATRIMÔNIO</h3>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-2">
-      <CrimeCard v-for="(crime, index) in crimesContraPatrimonio" :key="index" :crime="crime">
-        <template v-slot:title>{{ crime.label }}</template>
-      </CrimeCard>
-    </div>
-  </section>
-
-  <section class="mt-8">
-    <h3 class="text-lg font-bold text-gray-500">CRIMES CONTRA A ORDEM PÚBLICA</h3>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-2">
-      <CrimeCard v-for="(crime, index) in crimesContraOrdemPublica" :key="index" :crime="crime">
-        <template v-slot:title>{{ crime.label }}</template>
-        <template v-if="crime.subtitle" v-slot:subtitle>{{ crime.subtitle }}</template>
-      </CrimeCard>
-    </div>
-  </section>
-
-  <section class="mt-8">
-    <h3 class="text-lg font-bold text-gray-500">CRIMES DE TRÂNSITO</h3>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-2">
-      <CrimeCard v-for="(crime, index) in crimesDeTransito" :key="index" :crime="crime">
-        <template v-slot:title>{{ crime.label }}</template>
+      <CrimeCard v-for="(crime, index) in category.crimes" :key="index" :crime="crime">
       </CrimeCard>
     </div>
   </section>
@@ -106,13 +51,36 @@ export default defineComponent({
   },
   data() {
     return {
-      crimesContraVida: crimesContraVida,
-      crimesContraDireitosFundamentais: crimesContraDireitosFundamentais,
-      crimesContraLiberdadePessoal: crimesContraLiberdadePessoal,
-      crimesContraAdministracaoPublica: crimesContraAdministracaoPublica,
-      crimesContraPatrimonio: crimesContraPatrimonio,
-      crimesContraOrdemPublica: crimesContraOrdemPublica,
-      crimesDeTransito: crimesDeTransito,
+      categories: [
+        {
+          label: 'CRIMES CONTRA A VIDA',
+          crimes: crimesContraVida,
+        },
+        {
+          label: 'CRIMES CONTRA DIREITOS FUNDAMENTAIS',
+          crimes: crimesContraDireitosFundamentais,
+        },
+        {
+          label: 'CRIMES CONTRA A LIBERDADE PESSOAL',
+          crimes: crimesContraLiberdadePessoal,
+        },
+        {
+          label: 'CRIMES CONTRA A ADMINISTRAÇÃO PÚBLICA',
+          crimes: crimesContraAdministracaoPublica
+        },
+        {
+          label: 'CRIMES CONTRA PATRIMÔNIO',
+          crimes: crimesContraPatrimonio,
+        },
+        {
+          label: 'CRIMES CONTRA A ORDEM PÚBLICA',
+          crimes: crimesContraOrdemPublica,
+        },
+        {
+          label: 'CRIMES DE TRÂNSITO',
+          crimes: crimesDeTransito,
+        },
+      ],
     }
   },
 });
