@@ -29,7 +29,7 @@ export default defineComponent({
     }
 
     return {
-      isSelected: computed(() => store.state.crimes.some((el: ICrime) => el.label === props.crime.label)),
+      isSelected: computed(() => store.state.selectedCrimes.some((el: ICrime) => el.label === props.crime.label)),
       store,
       selectCrime,
     }
