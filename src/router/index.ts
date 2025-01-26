@@ -4,6 +4,7 @@ import GuestLayout from '@/views/layouts/GuestLayout.vue';
 import NotFound from "@/views/NotFound.vue";
 import AppLayout from "@/views/layouts/AppLayout.vue";
 import DashboardPage from "@/views/DashboardPage.vue";
+import PrisaoPage from "@/views/PrisaoPage.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -25,6 +26,11 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'DashboardPage',
         component: DashboardPage,
+      },
+      {
+        path: 'prisao',
+        name: 'PrisaoPage',
+        component: PrisaoPage,
       },
     ],
   },

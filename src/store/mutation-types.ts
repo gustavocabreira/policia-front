@@ -1,0 +1,1 @@
+export const SELECT_CRIME = 'SELECT_CRIME';

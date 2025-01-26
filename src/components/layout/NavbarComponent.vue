@@ -17,7 +17,7 @@
         </div>
 
         <div class="hidden sm:flex sm:items-center">
-          <LogoutButton/>
+          <LogoutButton />
         </div>
 
         <div class="sm:hidden cursor-pointer">
@@ -33,7 +33,7 @@
           <router-link v-for="(item, index) in menuItems" :key="index" :to="{ name: item.routeName }"
             class="text-gray-800 text-sm font-semibold hover:text-blue-600 mr-4">{{ item.label }}</router-link>
           <div class="flex justify-between items-center border-t-2 pt-2">
-            <LogoutButton/>
+            <LogoutButton />
           </div>
         </div>
       </div>
@@ -58,6 +58,10 @@ export default defineComponent({
         {
           routeName: 'DashboardPage',
           label: 'Dashboard',
+        },
+        {
+          routeName: 'PrisaoPage',
+          label: 'Realizar Prisão',
         }
       ] as IMenuItem[]
     }

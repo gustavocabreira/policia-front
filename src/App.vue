@@ -9,6 +9,9 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'App',
+  created() {
+    document.title = 'Polícia - RevoadaRJ';
+  }
 });
 </script>
 
