@@ -83,6 +83,8 @@
       </CrimeCard>
     </div>
   </section>
+
+  <div v-for="(crime, index) in selectedCrimes" :key="index">{{ crime.label }}</div>
 </template>
 
 <script lang="ts">
@@ -98,6 +100,12 @@ export default defineComponent({
     TitleComponent,
     CrimeCard,
   },
+  computed: {
+    selectedCrimes() {
+      const store = useStore();
+      return store.state.crimes;
+    }
+  },
   data() {
     return {
       crimesContraVida: crimesContraVida,
@@ -109,12 +117,5 @@ export default defineComponent({
       crimesDeTransito: crimesDeTransito,
     }
   },
-  mounted() {
-    const store = useStore()
-    
-    return {
-      selectedCrimes: computed(() => store.state.crimes)
-    }
-  }
 });
 </script>
