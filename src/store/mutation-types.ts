@@ -1,1 +1,2 @@
 export const SELECT_CRIME = 'SELECT_CRIME';
+export const SELECT_ATENUANTE = 'SELECT_ATENUANTE';

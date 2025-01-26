@@ -40,7 +40,7 @@ export default defineComponent({
       required: true,
     },
     data: {
-      type: Array as PropType<Array<Record<string, any>>>,
+      type: Array as PropType<Array<Record<string, string | number | boolean>>>,
       required: true,
     },
   },
