@@ -83,8 +83,6 @@
       </CrimeCard>
     </div>
   </section>
-
-  <div v-for="(crime, index) in selectedCrimes" :key="index">{{ crime.label }}</div>
 </template>
 
 <script lang="ts">
@@ -92,7 +90,7 @@ import TitleComponent from '@/components/layout/TitleComponent.vue';
 import CrimeCard from '@/components/prisao/CrimeCard.vue';
 import { crimesContraAdministracaoPublica, crimesContraDireitosFundamentais, crimesContraLiberdadePessoal, crimesContraOrdemPublica, crimesContraPatrimonio, crimesContraVida, crimesDeTransito } from '@/data/crimes';
 import { useStore } from '@/store';
-import { computed, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'PrisaoPage',

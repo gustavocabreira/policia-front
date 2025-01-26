@@ -15,9 +15,9 @@ export const store = createStore<State>({
   },
   mutations: {
     [SELECT_CRIME](state, crime: ICrime) {
-      const hasSelected = state.crimes.some(el => el.label == crime.label);
+      const isSelected = state.crimes.some(el => el.label == crime.label);
 
-      if (hasSelected) {
+      if (isSelected) {
         state.crimes = state.crimes.filter(el => el.label != crime.label);
       } else {
         state.crimes.push(crime);
