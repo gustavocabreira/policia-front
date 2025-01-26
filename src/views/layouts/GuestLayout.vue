@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="bg-gray-300 w-full h-screen flex">
     <router-view></router-view>
   </main>
 </template>
@@ -8,9 +8,8 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'App',
+  name: 'GuestLayout',
 });
 </script>
 
-
-<style src="./assets/styles/app.css" />
+<style lang="scss"></style>
