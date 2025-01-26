@@ -1,7 +1,9 @@
 <template>
-  <main class="bg-gray-300 w-full min-h-screen">
-    <NavbarComponent/>
-    <router-view></router-view>
+  <main class="bg-gray-100 w-full min-h-screen">
+    <NavbarComponent />
+    <section class="container w-9/12 mx-auto mt-8">
+      <router-view></router-view>
+    </section>
   </main>
 </template>
 
