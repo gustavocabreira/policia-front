@@ -1,6 +1,10 @@
 <template>
-  <h3 class="font-bold text-xl text-gray-500"><slot name="title"></slot></h3>
-  <p class="text-sm text-gray-400"><slot name="subtitle">Seu histórico de ação na polícia.</slot></p>
+  <h3 class="font-bold text-xl text-gray-500">
+    <slot name="title"></slot>
+  </h3>
+  <p class="text-sm text-gray-400">
+    <slot name="subtitle">Seu histórico de ação na polícia.</slot>
+  </p>
   <div
     class="relative flex flex-col w-full h-full overflow-auto text-gray-700 bg-white shadow rounded bg-clip-border mt-4">
     <table class="w-full text-left table-auto min-w-max">
