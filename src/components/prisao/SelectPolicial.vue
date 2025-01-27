@@ -4,7 +4,7 @@
     class="w-full bg-white placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded px-3 py-3 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow flex gap-4 items-center">
     <div class="bg-blue-100 px-2 py-2 rounded" v-for="(officer, index) in selectedOfficers" :key="index">
       <span>
-        {{ officer.name }}
+        {{ `${officer.name} | ${officer.id}` }}
       </span>
       <button class="ml-2 font-bold text-md hover:text-gray-400" @click="removeOfficer(officer)"><i
           class="fas fa-times"></i></button>
@@ -28,6 +28,7 @@
 </template>
 
 <script lang="ts">
+import IOfficer from '@/interfaces/IOfficer';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -46,8 +47,8 @@ export default defineComponent({
       ],
       officerSearchQuery: null,
       selectedOfficer: null,
-      filteredOfficers: [] as Array<{ id: number, name: string }>,
-      selectedOfficers: [] as Array<{ id: number, name: string }>,
+      filteredOfficers: [] as Array<IOfficer>,
+      selectedOfficers: [] as Array<IOfficer>,
     }
   },
 
@@ -63,7 +64,7 @@ export default defineComponent({
   },
 
   methods: {
-    selectOfficer(officer: { id: number, name: string }) {
+    selectOfficer(officer: IOfficer) {
       const existingOfficer = this.selectedOfficers.find(el => el.id === officer.id);
 
       if (existingOfficer) {
@@ -74,7 +75,7 @@ export default defineComponent({
 
       this.officerSearchQuery = null;
     },
-    removeOfficer(officer: { id: number, name: string }) {
+    removeOfficer(officer: IOfficer) {
       this.selectedOfficers = this.selectedOfficers.filter(el => el.id !== officer.id);
     },
   },
