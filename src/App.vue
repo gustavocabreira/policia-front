@@ -6,7 +6,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import client from './helpers/http';
 
 export default defineComponent({
   name: 'App',
