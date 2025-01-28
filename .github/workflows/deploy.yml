@@ -21,18 +21,16 @@ jobs:
           target: "/root/projects/revoada/app-front"
           overwrite: true
 
-      - name: "Set up Node.js"
-        uses: actions/setup-node@v3
+      - name: "Run npm install on VPS"
+        uses: appleboy/ssh-action@v0.1.6
         with:
-          node-version: '18.19.1'
-
-      - name: "Install dependencies"
-        run: |
-          sudo cd /root/projects/revoada/app-front
-          sudo npm install
-
-      - name: "Build the front-end app"
-        run: |
-          sudo cd /root/projects/revoada/app-front
-          sudo npm run build
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: |
+          cd /root/projects/revoada/app-front
+          npm install
+          npm run build
+          docker compose restart
 
