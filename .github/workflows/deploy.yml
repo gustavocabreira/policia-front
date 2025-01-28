@@ -24,13 +24,13 @@ jobs:
       - name: "Run npm install on VPS"
         uses: appleboy/ssh-action@v0.1.6
         with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: 22
-        script: |
-          cd /root/projects/revoada/app-front
-          npm install
-          npm run build
-          docker compose restart
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd /root/projects/revoada/app-front
+            npm install
+            npm run build
+            docker compose restart
 
