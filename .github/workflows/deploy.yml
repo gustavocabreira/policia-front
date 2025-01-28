@@ -21,21 +21,18 @@ jobs:
           target: "/root/projects/revoada/app-front"
           overwrite: true
 
-      - name: "Run npm install on VPS"
-        uses: appleboy/ssh-action@v0.1.6
+      - name: Deploy using ssh
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.PRIVATE_KEY }}
           port: 22
           script: |
-            echo $PATH
-            which node
-            which npm
-            which docker-compose
-            source ~/.bashrc
-            cd /root/projects/revoada/app-front
-            npm install
+            cd ~/projects/revoada/app-front
+            git pull origin main
+            git status
+            npm install --only=prod
             npm run build
             docker compose restart
 
