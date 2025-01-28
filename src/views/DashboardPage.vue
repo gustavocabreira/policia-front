@@ -69,18 +69,5 @@ export default defineComponent({
       ],
     }
   },
-  async mounted() {
-    const client = axios.create({
-      baseURL: 'http://localhost',
-      withCredentials: true,
-      withXSRFToken: true,
-    });
-
-    // await client.get('sanctum/csrf-cookie')
-    // await client.post('login', {
-    //   email: 'gustavo.softdev@gmail.com',
-    //   password: 'password'
-    // });
-  }
 });
 </script>

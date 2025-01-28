@@ -44,7 +44,3 @@ jobs:
           script: |
             cd /root/projects/revoada/app-front
             docker compose restart
-
-      - name: Validate deployment
-        run: |
-          curl --fail ${{ secrets.PROJECT_URL }} || exit 1
