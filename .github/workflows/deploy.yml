@@ -29,10 +29,10 @@ jobs:
       - name: "Install dependencies"
         run: |
           cd /root/projects/revoada/app-front
-          npm install
+          sudo npm install
 
       - name: "Build the front-end app"
         run: |
           cd /root/projects/revoada/app-front
-          npm run build
+          sudo npm run build
 
