@@ -19,6 +19,7 @@ import TableComponent from '@/components/common/TableComponent.vue';
 import CardRowComponent from '@/components/dashboard/CardRowComponent.vue';
 import TitleComponent from '@/components/layout/TitleComponent.vue';
 import formatDate from '@/helpers/formatDate';
+import axios from 'axios';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -68,5 +69,18 @@ export default defineComponent({
       ],
     }
   },
+  async mounted() {
+    const client = axios.create({
+      baseURL: 'http://localhost',
+      withCredentials: true,
+      withXSRFToken: true,
+    });
+
+    // await client.get('sanctum/csrf-cookie')
+    // await client.post('login', {
+    //   email: 'gustavo.softdev@gmail.com',
+    //   password: 'password'
+    // });
+  }
 });
 </script>

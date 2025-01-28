@@ -5,12 +5,14 @@
 </template>
 
 <script lang="ts">
+import client from '@/helpers/client';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'LogoutButton',
   methods: {
-    logout() {
+    async logout() {
+      await client.get('logout')
       this.$router.push({
         name: 'LoginPage',
       });

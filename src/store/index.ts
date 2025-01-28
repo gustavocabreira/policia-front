@@ -2,11 +2,13 @@ import ICrime from "@/interfaces/ICrime";
 import IMitigatingFactor from "@/interfaces/IMitigatingFactor";
 import { InjectionKey } from "vue";
 import { createStore, Store, useStore as vuexUseStore } from "vuex";
-import { SELECT_ATENUANTE, SELECT_CRIME } from "./mutation-types";
+import { SELECT_ATENUANTE, SELECT_CRIME, SET_USER } from "./mutation-types";
+import IUser from "@/interfaces/IUser";
 
 export interface State {
   selectedCrimes: ICrime[];
   selectedMitigatingFactors: IMitigatingFactor[];
+  user: IUser,
 }
 
 export const key: InjectionKey<Store<State>> = Symbol();
@@ -16,6 +18,7 @@ export const store = createStore<State>({
   state: {
     selectedCrimes: [],
     selectedMitigatingFactors: [],
+    user: {} as IUser,
   },
   mutations: {
     [SELECT_CRIME](state, crime: ICrime) {
@@ -40,6 +43,9 @@ export const store = createStore<State>({
         state.selectedMitigatingFactors.push(mitigatingFactor);
       }
     },
+    [SET_USER](state, user: IUser) {
+      state.user = user;
+    }
   },
 });
 
