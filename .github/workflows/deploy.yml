@@ -17,7 +17,7 @@ jobs:
 
       - name: "Install dependencies"
         run: |
-          npm install --only=prod
+          npm install
 
       - name: "Build the front-end app"
         run: |
