@@ -7,7 +7,7 @@ jobs:
   build_deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: "Baixar o código"
+      - name: "Checking out to the repository"
         uses: actions/checkout@v4
 
       - name: "Set up Node.js"
@@ -17,13 +17,13 @@ jobs:
 
       - name: "Install dependencies"
         run: |
-          npm install
+          npm install --only=prod
 
       - name: "Build the front-end app"
         run: |
           npm run build
 
-      - name: "Copiar arquivos para a VPS"
+      - name: "Copying files to the VPS"
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.HOST }}
@@ -34,7 +34,7 @@ jobs:
           target: "/root/projects/revoada/app-front"
           overwrite: true
       
-      - name: "Restart Docker Compose"
+      - name: "Restarting Docker Container"
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.HOST }}
@@ -44,3 +44,7 @@ jobs:
           script: |
             cd /root/projects/revoada/app-front
             docker compose restart
+
+      - name: Validate deployment
+        run: |
+          curl --fail ${{ secrets.PROJECT_URL }} || exit 1
