@@ -20,18 +20,19 @@ jobs:
           source: "."
           target: "/root/projects/revoada/app-front"
           overwrite: true
-      
-      - name: "Rodar npm install e build, reiniciar docker-compose"
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            cd /root/projects/revoada/app-front
-            npm install
-            npm run build
-            docker-compose restart
 
+      - name: "Set up Node.js"
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.19.1'
+
+      - name: "Install dependencies"
+        run: |
+          cd /root/projects/revoada/app-front
+          npm install
+
+      - name: "Build the front-end app"
+        run: |
+          cd /root/projects/revoada/app-front
+          npm run build
 
