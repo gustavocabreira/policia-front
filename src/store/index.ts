@@ -25,10 +25,8 @@ export const store = createStore<State>({
       const isCrimeSelected = state.selectedCrimes.some(existingCrime => existingCrime.label === crime.label);
 
       if (isCrimeSelected) {
-        // Remove crime if already selected
         state.selectedCrimes = state.selectedCrimes.filter(existingCrime => existingCrime.label !== crime.label);
       } else {
-        // Add crime if not selected
         state.selectedCrimes.push(crime);
       }
     },
@@ -36,10 +34,8 @@ export const store = createStore<State>({
       const isMitigatingFactorSelected = state.selectedMitigatingFactors.some(existingMitigatingFactor => existingMitigatingFactor.id === mitigatingFactor.id);
 
       if (isMitigatingFactorSelected) {
-        // Remove mitigating factor if already selected
         state.selectedMitigatingFactors = state.selectedMitigatingFactors.filter(existingMitigatingFactor => existingMitigatingFactor.id !== mitigatingFactor.id);
       } else {
-        // Add mitigating factor if not selected
         state.selectedMitigatingFactors.push(mitigatingFactor);
       }
     },
