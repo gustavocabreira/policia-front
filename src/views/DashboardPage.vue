@@ -1,6 +1,6 @@
 <template>
   <TitleComponent>
-    Bem-vindo ao Dashboard! Rodou deploy automático! Teste
+    Bem-vindo ao Dashboard!
     <template v-slot:subtitle>Confira o seu desempenho durante sua carreira.</template>
   </TitleComponent>
 
