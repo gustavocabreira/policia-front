@@ -10,6 +10,19 @@ jobs:
       - name: "Baixar o código"
         uses: actions/checkout@v4
 
+      - name: "Set up Node.js"
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.19.1'
+
+      - name: "Install dependencies"
+        run: |
+          npm install
+
+      - name: "Build the front-end app"
+        run: |
+          npm run build
+
       - name: "Copiar arquivos para a VPS"
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -20,19 +33,3 @@ jobs:
           source: "."
           target: "/root/projects/revoada/app-front"
           overwrite: true
-
-      - name: Deploy using ssh
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            cd /root/projects/revoada/app-front
-            git pull origin main
-            git status
-            npm install --only=prod
-            npm run build
-            docker compose restart
-
