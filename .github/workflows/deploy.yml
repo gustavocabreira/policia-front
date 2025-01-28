@@ -42,5 +42,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /root/projects/revoada/app-back
-            docker-compose restart
+            cd /root/projects/revoada/app-front
+            docker compose restart
