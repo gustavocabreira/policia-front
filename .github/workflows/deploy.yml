@@ -29,6 +29,11 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
+            echo $PATH
+            which node
+            which npm
+            which docker-compose
+            source ~/.bashrc
             cd /root/projects/revoada/app-front
             npm install
             npm run build
