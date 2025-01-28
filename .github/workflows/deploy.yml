@@ -33,3 +33,14 @@ jobs:
           source: "."
           target: "/root/projects/revoada/app-front"
           overwrite: true
+      
+      - name: "Restart Docker Compose"
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd /root/projects/revoada/app-back
+            docker-compose restart
