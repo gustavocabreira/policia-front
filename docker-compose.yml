@@ -13,5 +13,5 @@ services:
 
 networks:
   spa:
-    name: app-front
+    name: spa_network
     external: true
