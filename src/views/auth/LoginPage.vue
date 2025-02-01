@@ -22,11 +22,16 @@ export default defineComponent({
     const store = useStore()
     const router = useRouter()
 
-    client.get('user').then((response) => {
-      store.commit(SET_USER, response.data);
-      router.push({ name: 'DashboardPage' });
-      return;
-    })
+
+    client.get('user')
+      .then((response) => {
+        store.commit(SET_USER, response.data);
+        router.push({ name: 'DashboardPage' });
+        return;
+      })
+      .catch((err) => {
+        //
+      })
   }
 });
 </script>

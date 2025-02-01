@@ -3,7 +3,7 @@
     <div>
       <h1 class="text-3xl font-bold">Bem-vindo de volta!</h1>
       <h6 class="text-gray-400 text-sm">Clique em login com o Discord para entrar.</h6>
-      <a href="http://localhost/login" type="button" data-twe-ripple-init data-twe-ripple-color="light"
+      <a :href="loginUrl" type="button" data-twe-ripple-init data-twe-ripple-color="light"
         style="width: 202px"
         class="mb-2 flex rounded bg-blue-800 px-6 py-2.5 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg mt-4 cursor-pointer">
         <span class="mr-2">
@@ -16,9 +16,15 @@
 </template>
 
 <script lang="ts">
+import axios from 'axios';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'LoginForm',
+  computed: {
+    loginUrl(): string {
+      return `${process.env.VUE_APP_SPA_URL}/login`;
+    }
+  },
 });
 </script>
