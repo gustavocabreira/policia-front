@@ -6,3 +6,5 @@ export const GET_FIANCA = 'GET_FIANCA';
 export const SET_USER = 'SET_USER';
 
 export const NOTIFY = 'NOTIFY';
+
+export const SETUP_CATEGORIES = 'SETUP_CATEGORIES';
