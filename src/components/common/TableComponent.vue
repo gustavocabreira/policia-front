@@ -19,10 +19,14 @@
       </thead>
       <tbody>
         <tr v-for="(row, rowIndex) in data" :key="rowIndex" class="hover:shadow transition duration-150 ease-in-out">
-          <td class="p-4 border-b border-blue-gray-50" v-for="column in columns" :key="column.key">
+          <td class="p-4 border-b border-blue-gray-50" v-for="column in columns.filter(el => el.key != 'actions')"
+            :key="column.key">
             <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
               {{ row[column.key] }}
             </p>
+          </td>
+          <td v-if="columns.some(el => el.key == 'actions')" class="p-4 border-b border-blue-gray-50 flex items-center">
+            <slot name="actions" :row="row"></slot>
           </td>
         </tr>
       </tbody>
@@ -45,5 +49,10 @@ export default defineComponent({
     },
   },
   name: 'TableComponent',
+  computed: {
+    displayActionsColumn(): boolean {
+      return this.columns && this.columns.some(column => column.key == 'actions')
+    }
+  }
 });
 </script>

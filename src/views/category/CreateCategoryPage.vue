@@ -1,6 +1,6 @@
 <template>
   <TitleComponent>
-    Create Category
+    {{ category ? 'Edit' : 'Create' }} Category
     <template v-slot:subtitle>Fill in the fields and click save.</template>
   </TitleComponent>
 
@@ -23,10 +23,11 @@
 <script lang="ts">
 import TitleComponent from '@/components/layout/TitleComponent.vue';
 import { useStore } from '@/store';
-import { CREATE_CATEGORY } from '@/store/action-types';
+import { CREATE_CATEGORY, SHOW_CATEGORY, UPDATE_CATEGORY } from '@/store/action-types';
 import { defineComponent } from 'vue';
 import useNotifier from '@/hooks/notifier';
 import { NotificationType } from '@/interfaces/INotification';
+import ICategory from '@/interfaces/ICategory';
 
 export default defineComponent({
   name: 'CreateCategoryPage',
@@ -37,22 +38,60 @@ export default defineComponent({
     return {
       form: {
         name: '',
-      }
-    }
+      },
+      category: null as ICategory | null,
+    };
   },
   methods: {
-    save() {
-      const payload = this.form;
-      this.store.dispatch(CREATE_CATEGORY, payload)
-        .then(() => {
-          this.notify(NotificationType.SUCCESS, 'Success!', 'Category created successfuly');
-          this.$router.push({
-            name: 'CategoriesIndexPage'
-          })
-        })
-        .catch(() => {
-          this.notify(NotificationType.DANGER, 'Oops!', 'Something went wrong!')
-        })
+    async save() {
+      if (this.category) {
+        await this.updateCategory();
+      } else {
+        await this.storeCategory();
+      }
+    },
+
+    async getCategory() {
+      try {
+        const response = await this.store.dispatch(SHOW_CATEGORY, this.$route.params.id);
+        this.category = response.data;
+        if (this.category) {
+          this.form.name = this.category.name;
+        }
+      } catch (error) {
+        this.notify(NotificationType.DANGER, 'Oops!', 'Failed to fetch category');
+      }
+    },
+
+    async storeCategory() {
+      try {
+        await this.store.dispatch(CREATE_CATEGORY, this.form);
+        this.notify(NotificationType.SUCCESS, 'Success!', 'Category created successfully');
+        this.$router.push({ name: 'CategoriesIndexPage' });
+      } catch (error) {
+        this.notify(NotificationType.DANGER, 'Oops!', 'Something went wrong!');
+      }
+    },
+
+    async updateCategory() {
+      if (!this.category) {
+        this.notify(NotificationType.DANGER, 'Oops!', 'Category not found');
+        return;
+      }
+
+      const payload = { id: this.category.id, ...this.form };
+      try {
+        await this.store.dispatch(UPDATE_CATEGORY, payload);
+        this.notify(NotificationType.SUCCESS, 'Success!', 'Category updated successfully');
+        this.$router.push({ name: 'CategoriesIndexPage' });
+      } catch (error) {
+        this.notify(NotificationType.DANGER, 'Oops!', 'Something went wrong!');
+      }
+    },
+  },
+  mounted() {
+    if (this.$route.params.id) {
+      this.getCategory();
     }
   },
   setup() {
@@ -62,7 +101,7 @@ export default defineComponent({
     return {
       store,
       notify,
-    }
-  }
-})
+    };
+  },
+});
 </script>

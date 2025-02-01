@@ -1,7 +1,7 @@
 import client from "@/helpers/client";
 import ICategory from "@/interfaces/ICategory";
 import { State } from "@/store";
-import { CREATE_CATEGORY, INDEX_CATEGORY } from "@/store/action-types";
+import { CREATE_CATEGORY, INDEX_CATEGORY, SHOW_CATEGORY, UPDATE_CATEGORY } from "@/store/action-types";
 import { SETUP_CATEGORIES } from "@/store/mutation-types";
 import { Module } from "vuex";
 
@@ -24,6 +24,12 @@ export const category: Module<CategoryState, State> = {
         .then((response) => {
           commit(SETUP_CATEGORIES, response.data)
         });
+    },
+    [SHOW_CATEGORY](context, categoryId: number) {
+      return client.get(`categories/${categoryId}`)
+    },
+    [UPDATE_CATEGORY](context, category: ICategory) {
+      return client.put(`categories/${category.id}`, category);
     }
   }
 }

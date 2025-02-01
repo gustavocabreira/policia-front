@@ -14,6 +14,14 @@
 
   <section class="mt-8">
     <TableComponent :columns="columns" :data="categories">
+      <template v-slot:actions="{ row }">
+        <router-link :to="{ name: 'EditCategoryPage', params: { id: row.id } }">
+          <button
+            class="flex rounded bg-blue-800 px-6 py-2.5 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg cursor-pointer">
+            <i class="fas fa-pencil"></i>
+          </button>
+        </router-link>
+      </template>
     </TableComponent>
   </section>
 </template>
@@ -41,6 +49,10 @@ export default defineComponent({
         {
           key: 'order',
           label: 'Order',
+        },
+        {
+          key: 'actions',
+          label: 'Actions',
         },
       ],
     }

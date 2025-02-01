@@ -54,8 +54,6 @@ export const store = createStore<State>({
       notification.id = new Date().getTime();
       state.notifications.push(notification);
 
-      console.log(state.notifications)
-
       setTimeout(() => {
         state.notifications = state.notifications.filter(notif => notif.id !== notification.id);
       }, 3000);

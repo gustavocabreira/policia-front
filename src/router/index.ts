@@ -46,6 +46,11 @@ const routes: RouteRecordRaw[] = [
             path: 'create',
             name: 'CreateCategoryPage',
             component: CreateCategoryPage,
+          },
+          {
+            path: ':id/edit',
+            name: 'EditCategoryPage',
+            component: CreateCategoryPage,
           }
         ],
       }
