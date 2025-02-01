@@ -12,12 +12,6 @@
           class="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter text here..." v-model="form.name" />
       </div>
-      <div class="flex flex-col space-y-2">
-        <label for="inputField" class="text-sm font-medium text-gray-700">Order</label>
-        <input id="inputField" type="number" min="1"
-          class="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Enter text here..." v-model="form.order" />
-      </div>
       <div>
         <button type="submit"
           class="mb-2 flex rounded bg-blue-800 px-6 py-2.5 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg mt-4 cursor-pointer">Save</button>
@@ -43,7 +37,6 @@ export default defineComponent({
     return {
       form: {
         name: '',
-        order: 1,
       }
     }
   },
