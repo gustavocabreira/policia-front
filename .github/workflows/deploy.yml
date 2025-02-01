@@ -21,8 +21,8 @@ jobs:
 
       - name: "Update .env values"
         run: |
-          sed -i "s#APP_KEY=.*#APP_KEY=${{ secrets.APP_KEY }}#" .env
-          sed -i "s#DB_CONNECTION=.*#DB_CONNECTION=${{ secrets.DB_CONNECTION }}#" .env
+          sed -i "s#VUE_APP_API_URL=.*#VUE_APP_API_URL=${{ secrets.VUE_APP_API_URL }}#" .env
+          sed -i "s#VUE_APP_SPA_URL=.*#VUE_APP_SPA_URL=${{ secrets.VUE_APP_SPA_URL }}#" .env
 
       - name: "Install dependencies"
         run: |
