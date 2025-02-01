@@ -62,6 +62,10 @@ export default defineComponent({
         {
           routeName: 'PrisaoPage',
           label: 'Realizar Prisão',
+        },
+        {
+          routeName: 'CategoriesIndexPage',
+          label: 'Categorias',
         }
       ] as IMenuItem[]
     }

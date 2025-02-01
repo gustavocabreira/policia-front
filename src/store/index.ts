@@ -2,13 +2,17 @@ import ICrime from "@/interfaces/ICrime";
 import IMitigatingFactor from "@/interfaces/IMitigatingFactor";
 import { InjectionKey } from "vue";
 import { createStore, Store, useStore as vuexUseStore } from "vuex";
-import { SELECT_ATENUANTE, SELECT_CRIME, SET_USER } from "./mutation-types";
+import { NOTIFY, SELECT_ATENUANTE, SELECT_CRIME, SET_USER } from "./mutation-types";
 import IUser from "@/interfaces/IUser";
+import { category, CategoryState } from "./modules/category";
+import { INotification } from "@/interfaces/INotification";
 
 export interface State {
   selectedCrimes: ICrime[];
   selectedMitigatingFactors: IMitigatingFactor[];
   user: IUser,
+  category: CategoryState,
+  notifications: INotification[],
 }
 
 export const key: InjectionKey<Store<State>> = Symbol();
@@ -19,6 +23,10 @@ export const store = createStore<State>({
     selectedCrimes: [],
     selectedMitigatingFactors: [],
     user: {} as IUser,
+    category: {
+      categories: [],
+    },
+    notifications: [],
   },
   mutations: {
     [SELECT_CRIME](state, crime: ICrime) {
@@ -41,8 +49,21 @@ export const store = createStore<State>({
     },
     [SET_USER](state, user: IUser) {
       state.user = user;
-    }
+    },
+    [NOTIFY](state, notification: INotification) {
+      notification.id = new Date().getTime();
+      state.notifications.push(notification);
+
+      console.log(state.notifications)
+
+      setTimeout(() => {
+        state.notifications = state.notifications.filter(notif => notif.id !== notification.id);
+      }, 3000);
+    },
   },
+  modules: {
+    category,
+  }
 });
 
 // Custom hook to access store

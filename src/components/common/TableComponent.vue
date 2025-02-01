@@ -3,7 +3,7 @@
     <slot name="title"></slot>
   </h3>
   <p class="text-sm text-gray-400">
-    <slot name="subtitle">Seu histórico de ação na polícia.</slot>
+    <slot name="subtitle"></slot>
   </p>
   <div
     class="relative flex flex-col w-full h-full overflow-auto text-gray-700 bg-white shadow rounded bg-clip-border mt-4">

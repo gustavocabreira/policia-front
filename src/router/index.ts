@@ -5,6 +5,8 @@ import NotFound from "@/views/NotFound.vue";
 import AppLayout from "@/views/layouts/AppLayout.vue";
 import DashboardPage from "@/views/DashboardPage.vue";
 import PrisaoPage from "@/views/PrisaoPage.vue";
+import IndexCategoryPage from "@/views/category/IndexCategoryPage.vue";
+import CreateCategoryPage from "@/views/category/CreateCategoryPage.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -32,6 +34,21 @@ const routes: RouteRecordRaw[] = [
         name: 'PrisaoPage',
         component: PrisaoPage,
       },
+      {
+        path: 'categories',
+        children: [
+          {
+            path: '',
+            name: 'CategoriesIndexPage',
+            component: IndexCategoryPage,
+          },
+          {
+            path: 'create',
+            name: 'CreateCategoryPage',
+            component: CreateCategoryPage,
+          }
+        ],
+      }
     ],
   },
   {
