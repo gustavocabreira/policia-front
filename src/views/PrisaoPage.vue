@@ -5,18 +5,17 @@
   </TitleComponent>
 
   <section class="mt-8" v-for="(category, index) in categories" :key="index">
-    <h3 class="text-lg font-bold text-gray-500">{{ category.label }}</h3>
+    <h3 class="text-lg font-bold text-gray-500">{{ category.name }}</h3>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-2">
-      <CrimeCard v-for="(crime, index) in category.crimes" :key="index" :crime="crime">
-      </CrimeCard>
+      <CrimeCard v-for="(crime, index) in category.crimes" :key="index" :crime="crime" />
     </div>
   </section>
 
   <section class="mt-8">
     <h3 class="text-lg font-bold text-gray-500">MITIGATING FACTORS</h3>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-2">
-      <AtenuanteCard v-for="(mitigatingFactor, index) in mitigatingFactors" :key="index" :mitigatingFactor="mitigatingFactor">
-      </AtenuanteCard>
+      <AtenuanteCard v-for="(mitigatingFactor, index) in mitigatingFactors" :key="index"
+        :mitigatingFactor="mitigatingFactor" />
     </div>
   </section>
 
@@ -48,18 +47,15 @@
 
   <section v-if="selectedCrimes.length" class="mt-8">
     <h3 class="text-lg font-bold text-gray-500">SELECTED CRIMES</h3>
-    <div class="border bg-white px-4 py-4" v-html="selectedCrimes.map(el => el.label).join('<br/>')">
-    </div>
+    <div class="border bg-white px-4 py-4" v-html="selectedCrimes.map(el => el.name).join('<br/>')" />
   </section>
 
   <section v-if="selectedMitigatingFactors.length" class="mt-8">
     <h3 class="text-lg font-bold text-gray-500">SELECTED MITIGATING FACTORS</h3>
-    <div class="border bg-white px-4 py-4" v-html="selectedMitigatingFactors.map(el => el.label).join('<br/>')">
-    </div>
+    <div class="border bg-white px-4 py-4" v-html="selectedMitigatingFactors.map(el => el.label).join('<br/>')" />
   </section>
 
   <section class="mt-8">
-
     <SelectPolicial />
 
     <div class="grid grid-cols-1 md:grid-cols-3 mt-8 mb-8 gap-4">
@@ -82,109 +78,62 @@
 
     <button type="button" data-twe-ripple-init data-twe-ripple-color="light"
       class="mb-2 flex rounded bg-blue-800 px-6 py-2.5 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg mt-4 cursor-pointer">
-
       Submit Arrest
     </button>
   </section>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
+import { computed, onMounted } from 'vue';
+import { useStore } from '@/store';
 import CardComponent from '@/components/dashboard/CardComponent.vue';
 import TitleComponent from '@/components/layout/TitleComponent.vue';
 import AtenuanteCard from '@/components/prisao/AtenuanteCard.vue';
 import CrimeCard from '@/components/prisao/CrimeCard.vue';
 import SelectPolicial from '@/components/prisao/SelectPolicial.vue';
 import { mitigatingFactors } from '@/data/mitigatingFactors';
-import { crimesAgainstPublicAdministration, crimesAgainstFundamentalRights, crimesAgainstPersonalFreedom, crimesAgainstPublicOrder, crimesAgainstProperty, crimesAgainstLife, trafficCrimes } from '@/data/crimes';
 import ICrime from '@/interfaces/ICrime';
-import { useStore } from '@/store';
-import { computed, defineComponent } from 'vue';
+import { INDEX_CATEGORY } from '@/store/action-types';
+import { NotificationType } from '@/interfaces/INotification';
+import useNotifier from '@/hooks/notifier';
 
-export default defineComponent({
-  name: 'ArrestPage',
-  components: {
-    TitleComponent,
-    CrimeCard,
-    AtenuanteCard,
-    CardComponent,
-    SelectPolicial,
-  },
-  data() {
-    return {
-      categories: [
-        {
-          label: 'CRIMES AGAINST LIFE',
-          crimes: crimesAgainstLife,
-        },
-        {
-          label: 'CRIMES AGAINST FUNDAMENTAL RIGHTS',
-          crimes: crimesAgainstFundamentalRights,
-        },
-        {
-          label: 'CRIMES AGAINST PERSONAL FREEDOM',
-          crimes: crimesAgainstPersonalFreedom,
-        },
-        {
-          label: 'CRIMES AGAINST PUBLIC ADMINISTRATION',
-          crimes: crimesAgainstPublicAdministration
-        },
-        {
-          label: 'CRIMES AGAINST PROPERTY',
-          crimes: crimesAgainstProperty,
-        },
-        {
-          label: 'CRIMES AGAINST PUBLIC ORDER',
-          crimes: crimesAgainstPublicOrder,
-        },
-        {
-          label: 'TRAFFIC CRIMES',
-          crimes: trafficCrimes,
-        },
-      ],
-      mitigatingFactors: mitigatingFactors,
-    }
-  },
-  computed: {
-    totalSentence(): number {
-      let sentence = this.selectedCrimes.reduce((sentence: number, crime: ICrime) => sentence + crime.sentence, 0)
+const { notify } = useNotifier();
 
-      if (sentence > 100) {
-        sentence = 100;
-      }
-
-      return sentence;
-    },
-    totalFine(): string {
-      let fine = this.selectedCrimes.reduce((fine: number, crime: ICrime) => fine + (crime.fine ?? 0), 0);
-
-      if (fine > 600000) {
-        fine = 600000;
-      }
-
-      return fine.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-    },
-    totalBail(): string {
-      let hasUnbailableCrime = this.selectedCrimes.find(el => el.bail == null);
-
-      if (hasUnbailableCrime) {
-        return 'Non-bailable';
-      }
-
-      let bail = this.selectedCrimes.reduce((bail: number, crime: ICrime) => bail + (crime.bail ?? 0), 0);
-
-      if (bail > 600000) {
-        bail = 600000;
-      }
-
-      return bail.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-    }
-  },
-  setup() {
-    const store = useStore();
-    return {
-      selectedCrimes: computed(() => store.state.selectedCrimes),
-      selectedMitigatingFactors: computed(() => store.state.selectedMitigatingFactors),
-    }
+const fetchCategories = async () => {
+  try {
+    await store.dispatch(INDEX_CATEGORY);
+  } catch (error) {
+    notify(NotificationType.DANGER, 'Error', 'Failed to fetch categories.');
   }
+};
+
+onMounted(async () => {
+  await fetchCategories();
+})
+
+const categories = computed(() => store.state.category.categories);
+
+const store = useStore();
+
+const selectedCrimes = computed(() => store.state.selectedCrimes);
+const selectedMitigatingFactors = computed(() => store.state.selectedMitigatingFactors);
+
+const totalSentence = computed(() => {
+  let sentence = selectedCrimes.value.reduce((sentence: number, crime: ICrime) => sentence + crime.sentence, 0);
+  return sentence > 100 ? 100 : sentence;
 });
+
+const totalFine = computed(() => {
+  let fine = selectedCrimes.value.reduce((fine: number, crime: ICrime) => fine + (crime.fine ?? 0), 0);
+  return fine > 600000 ? 600000 : fine;
+});
+
+const totalBail = computed(() => {
+  let hasUnbailableCrime = selectedCrimes.value.find((el) => el.bail == null);
+  if (hasUnbailableCrime) return 'Non-bailable';
+
+  let bail = selectedCrimes.value.reduce((bail: number, crime: ICrime) => bail + (crime.bail ?? 0), 0);
+  return bail > 600000 ? 600000 : bail;
+});
+
 </script>
