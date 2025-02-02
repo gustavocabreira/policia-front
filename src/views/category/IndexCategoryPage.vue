@@ -21,17 +21,23 @@
             <i class="fas fa-pencil"></i>
           </button>
         </router-link>
+        <button @click="deleteCategory(row.id)"
+          class="flex rounded bg-blue-800 px-6 py-2.5 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg cursor-pointer">
+          <i class="fa-solid fa-trash"></i>
+        </button>
       </template>
     </TableComponent>
   </section>
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, ref, onMounted } from 'vue';
 import TableComponent from '@/components/common/TableComponent.vue';
 import TitleComponent from '@/components/layout/TitleComponent.vue';
 import { useStore } from '@/store';
-import { INDEX_CATEGORY } from '@/store/action-types';
-import { computed, defineComponent } from 'vue';
+import { DELETE_CATEGORY, INDEX_CATEGORY } from '@/store/action-types';
+import useNotifier from '@/hooks/notifier';
+import { NotificationType } from '@/interfaces/INotification';
 
 export default defineComponent({
   name: 'IndexCategoryPage',
@@ -39,32 +45,43 @@ export default defineComponent({
     TitleComponent,
     TableComponent,
   },
-  data() {
-    return {
-      columns: [
-        {
-          key: 'name',
-          label: 'Name',
-        },
-        {
-          key: 'order',
-          label: 'Order',
-        },
-        {
-          key: 'actions',
-          label: 'Actions',
-        },
-      ],
-    }
-  },
   setup() {
-    const store = useStore()
-    store.dispatch(INDEX_CATEGORY);
+    const store = useStore();
+    const { notify } = useNotifier();
+
+    const columns = ref([
+      { key: 'name', label: 'Name' },
+      { key: 'order', label: 'Order' },
+      { key: 'actions', label: 'Actions' },
+    ]);
+
+    const fetchCategories = async () => {
+      try {
+        await store.dispatch(INDEX_CATEGORY);
+      } catch (error) {
+        notify(NotificationType.DANGER, 'Error', 'Failed to fetch categories.');
+      }
+    };
+
+    onMounted(fetchCategories);
+
+    const categories = computed(() => store.state.category.categories);
+
+    const deleteCategory = async (categoryId: number) => {
+      try {
+        await store.dispatch(DELETE_CATEGORY, categoryId);
+        await fetchCategories();
+        notify(NotificationType.SUCCESS, 'Success!', 'Category deleted successfully!');
+      } catch (error) {
+        notify(NotificationType.DANGER, 'Error', 'Failed to delete category.');
+      }
+    };
 
     return {
-      store,
-      categories: computed(() => store.state.category.categories),
-    }
-  }
-})
+      columns,
+      categories,
+      deleteCategory,
+    };
+  },
+});
 </script>

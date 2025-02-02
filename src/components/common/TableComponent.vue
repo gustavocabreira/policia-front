@@ -25,7 +25,7 @@
               {{ row[column.key] }}
             </p>
           </td>
-          <td v-if="columns.some(el => el.key == 'actions')" class="p-4 border-b border-blue-gray-50 flex items-center">
+          <td v-if="columns.some(el => el.key == 'actions')" class="p-4 border-b border-blue-gray-50 flex items-center gap-4">
             <slot name="actions" :row="row"></slot>
           </td>
         </tr>
