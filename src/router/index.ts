@@ -7,6 +7,7 @@ import DashboardPage from "@/views/DashboardPage.vue";
 import PrisaoPage from "@/views/PrisaoPage.vue";
 import IndexCategoryPage from "@/views/category/IndexCategoryPage.vue";
 import CreateCategoryPage from "@/views/category/CreateCategoryPage.vue";
+import CreateCrimePage from "@/views/category/crime/CreateCrimePage.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -51,6 +52,16 @@ const routes: RouteRecordRaw[] = [
             path: ':id/edit',
             name: 'EditCategoryPage',
             component: CreateCategoryPage,
+          },
+          {
+            path: ':id/crimes',
+            children: [
+              {
+                path: 'create',
+                name: 'CreateCrimePage',
+                component: CreateCrimePage,
+              }
+            ]
           }
         ],
       }

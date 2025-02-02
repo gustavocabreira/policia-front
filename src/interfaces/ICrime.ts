@@ -1,7 +1,8 @@
 export default interface ICrime {
-  label: string;
-  subtitle: string;
+  name: string;
+  description: string;
   sentence: number;
   fine: number;
   bail: number | null;
+  category_id: number;
 }

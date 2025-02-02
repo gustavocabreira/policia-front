@@ -6,34 +6,38 @@ import { NOTIFY, SELECT_ATENUANTE, SELECT_CRIME, SET_USER } from "./mutation-typ
 import IUser from "@/interfaces/IUser";
 import { category, CategoryState } from "./modules/category";
 import { INotification } from "@/interfaces/INotification";
+import { crime, CrimeState } from "./modules/crime";
 
 export interface State {
   selectedCrimes: ICrime[];
   selectedMitigatingFactors: IMitigatingFactor[];
-  user: IUser,
-  category: CategoryState,
-  notifications: INotification[],
+  user: IUser | null;
+  category: CategoryState;
+  notifications: INotification[];
+  crime: CrimeState;
 }
 
 export const key: InjectionKey<Store<State>> = Symbol();
 
-// Store definition
 export const store = createStore<State>({
   state: {
     selectedCrimes: [],
     selectedMitigatingFactors: [],
-    user: {} as IUser,
+    user: null,
     category: {
       categories: [],
     },
     notifications: [],
+    crime: {
+      crimes: [],
+    }
   },
   mutations: {
     [SELECT_CRIME](state, crime: ICrime) {
-      const isCrimeSelected = state.selectedCrimes.some(existingCrime => existingCrime.label === crime.label);
+      const isCrimeSelected = state.selectedCrimes.some(existingCrime => existingCrime.name === crime.name);
 
       if (isCrimeSelected) {
-        state.selectedCrimes = state.selectedCrimes.filter(existingCrime => existingCrime.label !== crime.label);
+        state.selectedCrimes = state.selectedCrimes.filter(existingCrime => existingCrime.name !== crime.name);
       } else {
         state.selectedCrimes.push(crime);
       }
@@ -61,6 +65,7 @@ export const store = createStore<State>({
   },
   modules: {
     category,
+    crime,
   }
 });
 

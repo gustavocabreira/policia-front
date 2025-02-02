@@ -2,8 +2,8 @@
   <div
     class="border rounded px-3 py-3 cursor-pointer hover:bg-blue-100 transition ease-in-out duration-150 flex flex-col"
     @click="selectCrime" :class="{ 'bg-blue-100': isSelected, 'bg-white': !isSelected, 'text-blue-600': isSelected }">
-    <p>{{ crime.label }}</p>
-    <p v-if="crime.subtitle" class="text-xs text-gray-400">{{ crime.subtitle }}</p>
+    <p>{{ crime.name }}</p>
+    <p v-if="crime.description" class="text-xs text-gray-400">{{ crime.description }}</p>
   </div>
 </template>
 
@@ -29,7 +29,7 @@ export default defineComponent({
     }
 
     return {
-      isSelected: computed(() => store.state.selectedCrimes.some((el: ICrime) => el.label === props.crime.label)),
+      isSelected: computed(() => store.state.selectedCrimes.some((el: ICrime) => el.name === props.crime.name)),
       store,
       selectCrime,
     }
