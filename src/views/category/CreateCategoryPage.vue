@@ -20,88 +20,73 @@
   </section>
 </template>
 
-<script lang="ts">
-import TitleComponent from '@/components/layout/TitleComponent.vue';
+<script lang="ts" setup>
+import { ref, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useStore } from '@/store';
 import { CREATE_CATEGORY, SHOW_CATEGORY, UPDATE_CATEGORY } from '@/store/action-types';
-import { defineComponent } from 'vue';
 import useNotifier from '@/hooks/notifier';
 import { NotificationType } from '@/interfaces/INotification';
+import TitleComponent from '@/components/layout/TitleComponent.vue';
 import ICategory from '@/interfaces/ICategory';
 
-export default defineComponent({
-  name: 'CreateCategoryPage',
-  components: {
-    TitleComponent,
-  },
-  data() {
-    return {
-      form: {
-        name: '',
-      },
-      category: null as ICategory | null,
-    };
-  },
-  methods: {
-    async save() {
-      if (this.category) {
-        await this.updateCategory();
-      } else {
-        await this.storeCategory();
-      }
-    },
+const store = useStore();
+const route = useRoute();
+const router = useRouter();
+const { notify } = useNotifier();
 
-    async getCategory() {
-      try {
-        const response = await this.store.dispatch(SHOW_CATEGORY, this.$route.params.id);
-        this.category = response.data;
-        if (this.category) {
-          this.form.name = this.category.name;
-        }
-      } catch (error) {
-        this.notify(NotificationType.DANGER, 'Oops!', 'Failed to fetch category');
-      }
-    },
+const form = ref({ name: '' });
+const category = ref<ICategory | null>(null);
 
-    async storeCategory() {
-      try {
-        await this.store.dispatch(CREATE_CATEGORY, this.form);
-        this.notify(NotificationType.SUCCESS, 'Success!', 'Category created successfully');
-        this.$router.push({ name: 'CategoriesIndexPage' });
-      } catch (error) {
-        this.notify(NotificationType.DANGER, 'Oops!', 'Something went wrong!');
-      }
-    },
-
-    async updateCategory() {
-      if (!this.category) {
-        this.notify(NotificationType.DANGER, 'Oops!', 'Category not found');
-        return;
-      }
-
-      const payload = { id: this.category.id, ...this.form };
-      try {
-        await this.store.dispatch(UPDATE_CATEGORY, payload);
-        this.notify(NotificationType.SUCCESS, 'Success!', 'Category updated successfully');
-        this.$router.push({ name: 'CategoriesIndexPage' });
-      } catch (error) {
-        this.notify(NotificationType.DANGER, 'Oops!', 'Something went wrong!');
-      }
-    },
-  },
-  mounted() {
-    if (this.$route.params.id) {
-      this.getCategory();
+const getCategory = async () => {
+  try {
+    const response = await store.dispatch(SHOW_CATEGORY, route.params.id);
+    category.value = response.data;
+    if (category.value) {
+      form.value.name = category.value.name;
     }
-  },
-  setup() {
-    const store = useStore();
-    const { notify } = useNotifier();
+  } catch (error) {
+    notify(NotificationType.DANGER, 'Oops!', 'Failed to fetch category');
+  }
+};
 
-    return {
-      store,
-      notify,
-    };
-  },
+const storeCategory = async () => {
+  try {
+    await store.dispatch(CREATE_CATEGORY, form.value);
+    notify(NotificationType.SUCCESS, 'Success!', 'Category created successfully');
+    router.push({ name: 'CategoriesIndexPage' });
+  } catch (error) {
+    notify(NotificationType.DANGER, 'Oops!', 'Something went wrong!');
+  }
+};
+
+const updateCategory = async () => {
+  if (!category.value) {
+    notify(NotificationType.DANGER, 'Oops!', 'Category not found');
+    return;
+  }
+
+  const payload = { id: category.value.id, ...form.value };
+  try {
+    await store.dispatch(UPDATE_CATEGORY, payload);
+    notify(NotificationType.SUCCESS, 'Success!', 'Category updated successfully');
+    router.push({ name: 'CategoriesIndexPage' });
+  } catch (error) {
+    notify(NotificationType.DANGER, 'Oops!', 'Something went wrong!');
+  }
+};
+
+const save = async () => {
+  if (category.value) {
+    await updateCategory();
+  } else {
+    await storeCategory();
+  }
+};
+
+onMounted(() => {
+  if (route.params.id) {
+    getCategory();
+  }
 });
 </script>
