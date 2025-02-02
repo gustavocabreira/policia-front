@@ -52,7 +52,7 @@ export default defineComponent({
     const columns = ref([
       { key: 'name', label: 'Name' },
       { key: 'order', label: 'Order' },
-      { key: 'actions', label: 'Actions' },
+      { key: 'actions', label: 'Actions', align: 'center' },
     ]);
 
     const fetchCategories = async () => {
