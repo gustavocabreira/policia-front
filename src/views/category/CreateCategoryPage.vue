@@ -23,7 +23,7 @@
     </section>
 
     <section class="mt-8">
-      <CrimesList :category="category" />
+      <CrimesList :category="category" @deletedCrime="getCategory"/>
     </section>
   </section>
 </template>

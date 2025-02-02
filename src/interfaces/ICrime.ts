@@ -1,4 +1,5 @@
 export default interface ICrime {
+  id: number;
   name: string;
   description: string;
   sentence: number;

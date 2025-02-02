@@ -60,9 +60,14 @@ const routes: RouteRecordRaw[] = [
                 path: 'create',
                 name: 'CreateCrimePage',
                 component: CreateCrimePage,
-              }
-            ]
-          }
+              },
+              {
+                path: ':crimeId/edit',
+                name: 'EditCrimePage',
+                component: CreateCrimePage,
+              },
+            ],
+          },
         ],
       }
     ],
