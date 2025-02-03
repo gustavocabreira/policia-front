@@ -2,17 +2,17 @@
   <h3 class="text-lg font-bold text-gray-500">SELECT THE POLICE OFFICERS INVOLVED IN THE ARREST</h3>
 
   <div
-    class="w-full bg-white placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded px-3 py-3 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow flex gap-4 items-center">
+    class="w-full flex-wrap bg-white placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded px-3 py-3 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow flex gap-4 items-center">
 
     <div class="bg-blue-100 px-2 py-2 rounded flex items-center" v-for="(officer, index) in selectedOfficers"
       :key="index">
-      <span>{{ `${officer.global_name} | ${officer.id}` }}</span>
+      <span style="white-space: pre">{{ `${officer.global_name} | ${officer.id}` }}</span>
       <button class="ml-2 font-bold text-md hover:text-gray-400" @click="removeOfficer(officer)">
         <i class="fas fa-times"></i>
       </button>
     </div>
 
-    <input v-model="officerSearchQuery" type="text" class="officers-input w-full" placeholder="Search officers..." />
+    <input v-model="officerSearchQuery" type="text" class="officers-input" placeholder="Search officers..." />
   </div>
 
   <div v-if="filteredOfficers.length"
