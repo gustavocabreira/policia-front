@@ -129,8 +129,8 @@ const totalFine = computed(() => {
 });
 
 const totalBail = computed(() => {
-  let hasUnbailableCrime = selectedCrimes.value.find((el) => el.name.includes('**'));
-  if (hasUnbailableCrime) return 'Non-bailable';
+  let hasUnbailableCrime = selectedCrimes.value.find((el) => !el.is_bailable);
+  if (hasUnbailableCrime) return 'Non bailable';
 
   let bail = selectedCrimes.value.reduce((bail: number, crime: ICrime) => bail + (crime.bail ?? 0), 0);
   return bail > 600000 ? 600000 : bail;

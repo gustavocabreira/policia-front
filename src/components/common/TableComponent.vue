@@ -22,13 +22,17 @@
         <tr v-for="(row, rowIndex) in data" :key="rowIndex" class="hover:shadow transition duration-150 ease-in-out">
           <td :align="column.align" class="p-4 border-b border-blue-gray-50"
             v-for="column in columns.filter(el => el.key != 'actions')" :key="column.key">
-            <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-              {{ row[column.key] }}
-            </p>
+            <slot :name="column.key" :row="row">
+              <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                {{ row[column.key] }}
+              </p>
+            </slot>
           </td>
           <td align="center" v-if="columns.some(el => el.key == 'actions')"
-            class="p-4 border-b border-blue-gray-50 flex items-center justify-center gap-4">
-            <slot name="actions" :row="row"></slot>
+            class="p-4 border-b border-blue-gray-50 gap-4">
+            <div class="flex gap-4 items-center justify-center">
+              <slot name="actions" :row="row"></slot>
+            </div>
           </td>
         </tr>
       </tbody>

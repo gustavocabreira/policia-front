@@ -39,6 +39,12 @@
       </div>
     </div>
     <div>
+      <label className="flex items-center space-x-2 cursor-pointer">
+        <input v-model="form.is_bailable" type="checkbox" className="w-5 h-5 text-blue-600 shadow-sm rounded border border-gray-300 focus:ring-blue-500" />
+        <span className="text-sm font-medium text-gray-700">Accept Terms</span>
+      </label>
+    </div>
+    <div>
       <button type="submit"
         class="mb-2 flex rounded bg-blue-800 px-6 py-2.5 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg mt-4 cursor-pointer">Save</button>
     </div>
@@ -73,6 +79,7 @@ const form = ref({
   fine: '',
   bail: '',
   category_id: '',
+  is_bailable: false,
 });
 
 const getCrime = async () => {

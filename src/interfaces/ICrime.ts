@@ -6,4 +6,5 @@ export default interface ICrime {
   fine: number;
   bail: number | null;
   category_id: number;
+  is_bailable: boolean;
 }

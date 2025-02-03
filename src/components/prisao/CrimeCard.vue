@@ -1,9 +1,13 @@
 <template>
   <div
-    class="border rounded px-3 py-3 cursor-pointer hover:bg-blue-100 transition ease-in-out duration-150 flex flex-col"
+    class="border rounded px-3 py-3 cursor-pointer hover:bg-blue-100 transition ease-in-out duration-150 flex flex-col justify-between"
     @click="selectCrime" :class="{ 'bg-blue-100': isSelected, 'bg-white': !isSelected, 'text-blue-600': isSelected }">
-    <p>{{ crime.name }}</p>
-    <p v-if="crime.description" class="text-xs text-gray-400">{{ crime.description }}</p>
+    <div>
+      <p>{{ crime.name }}</p>
+      <p v-if="crime.description" class="text-xs text-gray-400">{{ crime.description }}</p>
+    </div>
+    
+    <p v-if="!crime.is_bailable" class="text-xs text-gray-400 font-bold mt-2">Non bailable</p>
   </div>
 </template>
 

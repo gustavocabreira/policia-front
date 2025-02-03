@@ -1,5 +1,19 @@
 <template>
   <TableComponent :columns="columns" :data="category.crimes">
+    <template v-slot:is_bailable="{ row }">
+      <div class="relative inline-flex w-full">
+        <button v-if="row.is_bailable"
+          class="w-full rounded-md bg-green-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          type="button">
+          Bailable
+        </button>
+        <button v-else
+          class="w-full rounded-md bg-red-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          type="button">
+          Non bailable
+        </button>
+      </div>
+    </template>
 
     <template v-slot:actions="{ row }">
       <router-link :to="{ name: 'EditCrimePage', params: { id: row.category_id, crimeId: row.id } }">
@@ -38,6 +52,7 @@ const emit = defineEmits<{
 }>();
 
 const columns = ref([
+  { key: 'is_bailable', label: 'Is Bailable', align: 'center' },
   { key: 'name', label: 'Name' },
   { key: 'description', label: 'Description' },
   { key: 'sentence', label: 'Sentence', align: 'right' },
@@ -50,7 +65,7 @@ const deleteCrime = async (crime: ICrime) => {
   try {
     await store.dispatch(DELETE_CRIME, crime);
     notify(NotificationType.SUCCESS, 'Success!', 'Crime deleted successfuly.');
-    emit('deletedCrime') 
+    emit('deletedCrime')
   } catch (error) {
     notify(NotificationType.DANGER, 'Error', 'Failed to delete crime.');
   }
