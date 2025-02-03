@@ -12,7 +12,7 @@
       </button>
     </div>
 
-    <input v-model="officerSearchQuery" type="text" class="officers-input" placeholder="Search officers..." />
+    <input v-model="officerSearchQuery" type="text" class="officers-input w-full" placeholder="Search officers..." />
   </div>
 
   <div v-if="filteredOfficers.length"
@@ -29,6 +29,7 @@
     <p class="px-2 py-2 text-gray-500">No officers found.</p>
   </div>
 </template>
+
 <script lang="ts" setup>
 import { ref, watch, onMounted } from 'vue';
 import { useStore } from '@/store';
@@ -83,3 +84,9 @@ watch(officerSearchQuery, (query) => {
 
 onMounted(fetchCops);
 </script>
+
+<style scoped>
+.officers-input:focus-visible {
+  outline: none;
+}
+</style>
