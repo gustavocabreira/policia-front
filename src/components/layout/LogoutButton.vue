@@ -12,7 +12,7 @@ export default defineComponent({
   name: 'LogoutButton',
   methods: {
     async logout() {
-      await client.get('logout')
+      await client.post('logout')
       this.$router.push({
         name: 'LoginPage',
       });
