@@ -18,20 +18,20 @@
         class="w-full rounded border border-gray-300 px-4 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="Enter text here..." v-model="form.description" />
     </div>
-    <div class="md:flex items-center justify-between">
-      <div class="flex flex-col space-y-2">
+    <div class="md:flex gap-4 items-center justify-between">
+      <div class="flex flex-col space-y-2 w-full">
         <label for="inputField" class="text-sm font-medium text-gray-700">Sentence</label>
         <input id="inputField" type="text"
           class="w-full rounded border border-gray-300 px-4 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter text here..." v-model="form.sentence" />
       </div>
-      <div class="flex flex-col space-y-2">
+      <div class="flex flex-col space-y-2 w-full">
         <label for="inputField" class="text-sm font-medium text-gray-700">Fine</label>
         <input id="inputField" type="text"
           class="w-full rounded border border-gray-300 px-4 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter text here..." v-model="form.fine" />
       </div>
-      <div class="flex flex-col space-y-2">
+      <div class="flex flex-col space-y-2 w-full">
         <label for="inputField" class="text-sm font-medium text-gray-700">Bail</label>
         <input id="inputField" type="text"
           class="w-full rounded border border-gray-300 px-4 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
