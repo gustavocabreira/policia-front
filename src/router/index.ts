@@ -8,6 +8,13 @@ import PrisaoPage from "@/views/PrisaoPage.vue";
 import IndexCategoryPage from "@/views/category/IndexCategoryPage.vue";
 import CreateCategoryPage from "@/views/category/CreateCategoryPage.vue";
 import CreateCrimePage from "@/views/category/crime/CreateCrimePage.vue";
+import { useStore } from "@/store";
+import hasRoles from "@/helpers/hasRoles";
+
+interface CustomRouteMeta {
+  requiresAuth?: boolean;
+  roles?: string[];
+}
 
 const routes: RouteRecordRaw[] = [
   {
@@ -37,6 +44,10 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: 'categories',
+        meta: {
+          requiresAuth: true,
+          roles: ['administrator'],
+        },
         children: [
           {
             path: '',
@@ -82,6 +93,21 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes: routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const store = useStore()
+  const user = store.state.user;
+
+  const meta = to.meta as CustomRouteMeta;
+
+  if (meta.roles) {
+    if (meta.roles && !meta.roles.some((role: string) => hasRoles(user, role))) {
+      return next({ name: "DashboardPage" });
+    }
+  }
+
+  next();
 });
 
 export default router;

@@ -11,7 +11,7 @@
           </div>
 
           <div class="hidden sm:flex sm:items-center">
-            <router-link v-for="(item, index) in menuItems" :key="index" :to="{ name: item.routeName }"
+            <router-link v-for="(item, index) in accessibleMenuItems" :key="index" :to="{ name: item.routeName }"
               class="text-gray-800 text-sm font-semibold hover:text-blue-600 mr-4">{{ item.label }}</router-link>
           </div>
         </div>
@@ -30,7 +30,7 @@
 
       <div class="block sm:hidden bg-white border-t-2 py-2">
         <div class="flex flex-col">
-          <router-link v-for="(item, index) in menuItems" :key="index" :to="{ name: item.routeName }"
+          <router-link v-for="(item, index) in accessibleMenuItems" :key="index" :to="{ name: item.routeName }"
             class="text-gray-800 text-sm font-semibold hover:text-blue-600 mr-4">{{ item.label }}</router-link>
           <div class="flex justify-between items-center border-t-2 pt-2">
             <LogoutButton />
@@ -42,33 +42,34 @@
   </nav>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import IMenuItem from '@/interfaces/layout/IMenuItem';
-import { defineComponent } from 'vue';
+import { computed } from 'vue';
 import LogoutButton from './LogoutButton.vue';
+import { useStore } from '@/store';
+import hasRoles from '@/helpers/hasRoles';
 
-export default defineComponent({
-  name: 'NavbarComponent',
-  components: {
-    LogoutButton,
+const store = useStore()
+const user = computed(() => store.state.user);
+
+const navigationItems: IMenuItem[] = [
+  {
+    routeName: 'DashboardPage',
+    label: 'Dashboard',
+    roles: ['*'],
   },
-  data() {
-    return {
-      menuItems: [
-        {
-          routeName: 'DashboardPage',
-          label: 'Dashboard',
-        },
-        {
-          routeName: 'PrisaoPage',
-          label: 'Make Arrest',
-        },
-        {
-          routeName: 'CategoriesIndexPage',
-          label: 'Categories',
-        }
-      ] as IMenuItem[]
-    }
+  {
+    routeName: 'PrisaoPage',
+    label: 'Make Arrest',
+    roles: ['*'],
   },
-})
+  {
+    routeName: 'CategoriesIndexPage',
+    label: 'Categories',
+    roles: ['administrator'],
+  }
+];
+
+const accessibleMenuItems = computed(() => navigationItems.filter(item => item.roles.some(role => role == '*' || hasRoles(user.value, role))))
+
 </script>

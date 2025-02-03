@@ -1,3 +1,5 @@
+import IRole from "./IRole";
+
 export default interface IUser {
   id: string,
   name: string | null,
@@ -16,4 +18,5 @@ export default interface IUser {
   access_token: string,
   refresh_token: string,
   profile_photo_url: string,
+  roles: IRole[],
 }
