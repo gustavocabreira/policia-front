@@ -10,3 +10,6 @@ export const SETUP_CATEGORIES = 'SETUP_CATEGORIES';
 
 export const SET_USER = 'SET_USER';
 
+export const SETUP_COPS = 'SETUP_COPS';
+
+

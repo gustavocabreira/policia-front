@@ -8,3 +8,6 @@ export const CREATE_CRIME = 'CREATE_CRIME';
 export const SHOW_CRIME = 'SHOW_CRIME';
 export const UPDATE_CRIME = 'UPDATE_CRIME';
 export const DELETE_CRIME = 'DELETE_CRIME';
+
+
+export const GET_COP = 'GET_COP';

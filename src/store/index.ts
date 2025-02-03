@@ -7,6 +7,7 @@ import IUser from "@/interfaces/IUser";
 import { category, CategoryState } from "./modules/category";
 import { INotification } from "@/interfaces/INotification";
 import { crime, CrimeState } from "./modules/crime";
+import { cop, CopState } from "./modules/cop";
 
 export interface State {
   selectedCrimes: ICrime[];
@@ -15,6 +16,7 @@ export interface State {
   category: CategoryState;
   notifications: INotification[];
   crime: CrimeState;
+  cop: CopState,
 }
 
 export const key: InjectionKey<Store<State>> = Symbol();
@@ -30,6 +32,9 @@ export const store = createStore<State>({
     notifications: [],
     crime: {
       crimes: [],
+    },
+    cop: {
+      cops: [],
     }
   },
   mutations: {
@@ -66,6 +71,7 @@ export const store = createStore<State>({
   modules: {
     category,
     crime,
+    cop,
   }
 });
 
